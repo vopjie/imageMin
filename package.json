@@ -1,0 +1,11 @@
+{
+  "name": "imageMin",
+  "description": "app use gulp",
+  "version": "0.1.0",
+  "author": "jie",
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-cache": "*",
+    "gulp-imagemin": "*"
+  }
+}
