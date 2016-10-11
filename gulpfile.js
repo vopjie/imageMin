@@ -1,34 +1,19 @@
 var gulp = require('gulp'),
-  gulpLoadPlugins = require('gulp-load-plugins'),
-  plugins = gulpLoadPlugins(),
-  pngquant = require('imagemin-pngquant'),
-  imageminJpegtran = require('imagemin-jpegtran'),
-  imageminGifsicle = require('imagemin-gifsicle');
-
-// 图片压缩处理队列
-gulp.task('imgmin', ['png', 'jpeg', 'gif']);
-
-gulp.task('png', function() {
-  return gulp.src('images/*.png')
-    .pipe(plugins.imagemin({
-      use: [pngquant()]
-    }))
-    .pipe(gulp.dest('imageMin/'));
-});
-gulp.task('jpeg', function() {
-  return gulp.src('images/*.jpg')
-    .pipe(plugins.imagemin({
-      use: [imageminJpegtran()]
-    }))
-    .pipe(gulp.dest('imageMin/'));
-});
-gulp.task('gif', function() {
-  return gulp.src('images/*.gif')
-    .pipe(plugins.imagemin({
-      use: [imageminGifsicle()]
-    }))
-    .pipe(gulp.dest('imageMin/'));
-});
+    imagemin = require('gulp-imagemin'),
+    pngquant = require('imagemin-pngquant'),
+    cache = require('gulp-cache');
+gulp.task('imgmin', function () {
+    gulp.src('images/*.{png,jpg,jpeg,gif,ico}')
+        .pipe(cache(imagemin({
+            optimizationLevel: 5, //类型：Number  默认：3  取值范围：0-7（优化等级）
+            progressive: true, //类型：Boolean 默认：false 无损压缩jpg图片
+            interlaced: true, //类型：Boolean 默认：false 隔行扫描gif进行渲染
+            multipass: true, //类型：Boolean 默认：false 多次优化svg直到完全优化
+            svgoPlugins: [{removeViewBox: false}],
+            use: [pngquant()]
+        })))
+        .pipe(gulp.dest('imageMin/'));
+})
 
 // 默认任务
 gulp.task('default', ['imgmin']);

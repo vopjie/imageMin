@@ -6,6 +6,7 @@
   "devDependencies": {
     "gulp": "*",
     "gulp-cache": "*",
+    "imagemin-pngquant": "*",
     "gulp-imagemin": "*"
   }
 }
